@@ -1,4 +1,4 @@
-package com.reyes.lab02
+package com.galindo.lab02
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

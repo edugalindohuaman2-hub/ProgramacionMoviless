@@ -1,4 +1,4 @@
-package com.reyes.sema02galindo
+package com.galindo.sema02galindo
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

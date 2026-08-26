@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "sema02.Galindo"
 include(":app")
 include(":lab02")
+include(":lab02IA")
