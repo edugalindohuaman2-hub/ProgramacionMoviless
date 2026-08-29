@@ -56,5 +56,5 @@ Maestro = dias de retraso x S/ 3.00
 ## Objetivo
 
 Aplicar conceptos basicos de programacion en Kotlin, como variables, funciones, data class, if, when,
-entrada de datoss y manejo de fechas.
+entrada de datoss y manejos de fechas.
 "@ | Set-Content README.md 
