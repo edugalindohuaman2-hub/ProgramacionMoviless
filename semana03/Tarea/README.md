@@ -1,6 +1,6 @@
-@"
-# Sistema de Prestamo de Biblioteca
 
+# Sistema de Prestamo de Biblioteca
+Galindo Huaman Edu Edward
 ## Descripcion
 
 Proyecto desarrollado en Kotlin para gestionar el prestamo y devolucion de libros.
@@ -57,4 +57,4 @@ Maestro = dias de retraso x S/ 3.00
 
 Aplicar conceptos basicos de programacion en Kotlin, como variables, funciones, data class, if, when,
 entrada de datoss y manejos de fechas.
-"@ | Set-Content README.md 
+
