@@ -90,16 +90,16 @@ fun mostrarResultado(prestamo: Prestamo) {
 
 fun main() {
 
-    print("Ingrese el título del libro: ")
+    print("Ingrese el titulo del libro: ")
     val tituloLibro = readln()
 
     print("Ingrese el tipo de usuario (Alumno/Maestro): ")
     val tipoUsuario = readln()
 
-    print("Ingrese fecha de préstamo (AAAA-MM-DD): ")
+    print("Ingrese fecha de prestamo (AAAA-MM-DD): ")
     val fechaPrestamo = LocalDate.parse(readln())
 
-    print("Ingrese fecha de devolución (AAAA-MM-DD): ")
+    print("Ingrese fecha de devolucion (AAAA-MM-DD): ")
     val fechaDevolucion = LocalDate.parse(readln())
 
     print("Ingrese fecha de entrega (AAAA-MM-DD): ")

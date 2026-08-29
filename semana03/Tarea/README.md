@@ -51,10 +51,10 @@ Maestro = dias de retraso x S/ 3.00
 
 ## Ejemplo
 
-![img.png](img.png)
+![img.png](img.png) 
 
 ## Objetivo
 
 Aplicar conceptos basicos de programacion en Kotlin, como variables, funciones, data class, if, when,
-entrada de datos y manejo de fechas.
+entrada de datoss y manejo de fechas.
 "@ | Set-Content README.md 
