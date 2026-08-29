@@ -90,27 +90,20 @@ fun mostrarResultado(prestamo: Prestamo) {
 
 fun main() {
 
-    val tituloLibro = "Programacion en Kotlin"
+    print("Ingrese el título del libro: ")
+    val tituloLibro = readln()
 
-    val tipoUsuario = "Alumno"
+    print("Ingrese el tipo de usuario (Alumno/Maestro): ")
+    val tipoUsuario = readln()
 
-    val fechaPrestamo = LocalDate.of(
-        2026,
-        8,
-        20
-    )
+    print("Ingrese fecha de préstamo (AAAA-MM-DD): ")
+    val fechaPrestamo = LocalDate.parse(readln())
 
-    val fechaDevolucion = LocalDate.of(
-        2026,
-        8,
-        25
-    )
+    print("Ingrese fecha de devolución (AAAA-MM-DD): ")
+    val fechaDevolucion = LocalDate.parse(readln())
 
-    val fechaEntrega = LocalDate.of(
-        2026,
-        8,
-        28
-    )
+    print("Ingrese fecha de entrega (AAAA-MM-DD): ")
+    val fechaEntrega = LocalDate.parse(readln())
 
     val prestamo = Prestamo(
         tituloLibro,
