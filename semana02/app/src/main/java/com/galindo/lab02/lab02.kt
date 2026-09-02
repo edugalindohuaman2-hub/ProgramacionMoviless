@@ -30,7 +30,6 @@ fun mostrarDetalle(productos: List<Producto>) {
         println(String.format("%d. %-20s x%d  S/%8.2f", i, p.nombre, p.cantidad, importe))
         i++
     }
-    println("---------------------------------------------")
 }
 
 fun calcularDescuento(total: Double): Double {
@@ -46,20 +45,35 @@ fun main() {
     println("    CARRITO DE COMPRAS - TIENDA TECSUP   ")
     println("=========================================")
 
-    val nombreCliente = "Juan Leon"
+    print("Ingrese el nombre del cliente: ")
+    val nombreCliente = readln()
+
     val carrito = mutableListOf<Producto>()
 
-    println("Cliente: $nombreCliente")
+    print("¿Cuántos productos desea registrar?: ")
+    val totalProductos = readln().toIntOrNull() ?: 0
+
     println()
+    for (i in 1..totalProductos) {
+        println("--- Producto $i ---")
+        print("Nombre: ")
+        val nombre = readln()
 
-    carrito.add(Producto("Laptop HP", 2500.0, 1))
-    carrito.add(Producto("Mouse Logitech", 45.5, 2))
-    carrito.add(Producto("Audifonos Sony", 120.0, 1))
-    carrito.add(Producto("USB Kingston 64GB", 25.0, 3))
+        print("Precio (S/): ")
+        val precio = readln().toDoubleOrNull() ?: 0.0
 
-    for (producto in carrito) {
-        println("Producto agregado: ${producto.nombre}")
+        print("Cantidad: ")
+        val cantidad = readln().toIntOrNull() ?: 1
+
+        carrito.add(Producto(nombre, precio, cantidad))
+        println("Producto agregado: $nombre\n")
     }
+    if (carrito.isEmpty()) {
+        println("No se ingresaron productos en el carrito.")
+        return
+    }
+
+    println("Cliente: $nombreCliente")
     println()
 
     mostrarDetalle(carrito)
