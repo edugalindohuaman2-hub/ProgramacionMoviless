@@ -127,8 +127,69 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                 modifier = Modifier.weight(1f)
             )
         }
+            Spacer(
+                modifier = Modifier.height(24.dp)
+            )
+
+            Button(
+                onClick = {
+                    mostrarResumen = true
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Text("AGREGAR PRODUCTO")
+            }
+            Spacer(
+                modifier = Modifier.height(24.dp)
+            )
+
+            if (mostrarResumen) {
+
+                val precioNum = precio.toDoubleOrNull() ?: 0.0
+
+                val cantidadNum = cantidad.toIntOrNull() ?: 0
+
+                val importe = precioNum * cantidadNum
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor =
+                            MaterialTheme.colorScheme.primaryContainer
+                    )
+                ) {
+
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+
+                        Text(
+                            text = nombre,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+
+                        Text(
+                            text = "Precio: S/ " +
+                                    String.format("%.2f", precioNum)
+                        )
+
+                        Text(
+                            text = "Cantidad: $cantidadNum"
+                        )
+
+                        Text(
+                            text = "Importe: S/ " +
+                                    String.format("%.2f", importe),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            }
+        }
     }
-}
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
