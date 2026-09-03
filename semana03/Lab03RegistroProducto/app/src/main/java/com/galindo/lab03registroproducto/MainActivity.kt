@@ -69,6 +69,10 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
         var mostrarResumen by remember {
             mutableStateOf(false)
         }
+        var errorMensaje by remember {
+            mutableStateOf("") }
+
+
         Text(
             text = "Nuevo producto",
             style = MaterialTheme.typography.headlineSmall
@@ -131,69 +135,94 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                 modifier = Modifier.height(24.dp)
             )
 
-            Button(
-                onClick = {
-                    mostrarResumen = true
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-
-                Text("AGREGAR PRODUCTO")
-            }
-            Spacer(
-                modifier = Modifier.height(24.dp)
-            )
-
-            if (mostrarResumen) {
-
-                val precioNum = precio.toDoubleOrNull() ?: 0.0
-
-                val cantidadNum = cantidad.toIntOrNull() ?: 0
-
-                val importe = precioNum * cantidadNum
-
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor =
-                            MaterialTheme.colorScheme.primaryContainer
-                    )
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    onClick = {
+                        // Validar si hay campos vacíos
+                        if (nombre.isBlank() || precio.isBlank() || cantidad.isBlank()) {
+                            mostrarResumen = false
+                            errorMensaje = "Por favor, complete todos los campos."
+                        } else if (precio.toDoubleOrNull() == null || cantidad.toIntOrNull() == null) {
+                            mostrarResumen = false
+                            errorMensaje = "Ingrese un precio y cantidad válidos."
+                        } else {
+                            errorMensaje = ""
+                            mostrarResumen = true
+                        }
+                    },
+                    modifier = Modifier.weight(1f)
                 ) {
+                    Text("AGREGAR PRODUCTO")
+                }
 
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
+                Spacer(modifier = Modifier.width(8.dp))
 
-                        Text(
-                            text = nombre,
-                            style = MaterialTheme.typography.titleLarge
-                        )
+                Button(
+                    onClick = {
+                        nombre = ""
+                        precio = ""
+                        cantidad = ""
+                        mostrarResumen = false
+                        errorMensaje = ""
+                    },
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("LIMPIAR")
+                }
+            }
 
-                        Text(
-                            text = "Precio: S/ " +
-                                    String.format("%.2f", precioNum)
-                        )
+        // Mensaje de error (solo visible si no está vacío)
+        if (errorMensaje.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = errorMensaje,
+                color = Color.Red,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
 
-                        Text(
-                            text = "Cantidad: $cantidadNum"
-                        )
+        Spacer(modifier = Modifier.height(24.dp))
 
-                        Text(
-                            text = "Importe: S/ " +
-                                    String.format("%.2f", importe),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(
-                            modifier = Modifier.height(16.dp)
-                        )
+        // Card de Resumen
+        if (mostrarResumen) {
 
-                        Text(
-                            text = "✓ Producto registrado correctamente",
-                            color = Color(0xFF2E7D32)
+            val precioNum = precio.toDoubleOrNull() ?: 0.0
+            val cantidadNum = cantidad.toIntOrNull() ?: 0
+            val importe = precioNum * cantidadNum
 
-                        )
-                        Modifier.fillMaxWidth()
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+
+                    Text(
+                        text = nombre,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                    Text(
+                        text = "Precio: S/ " + String.format(Locale.US, "%.2f", precioNum)
+                    )
+
+                    Text(
+                        text = "Cantidad: $cantidadNum"
+                    )
+
+                    Text(
+                        text = "Importe: S/ " + String.format(Locale.US, "%.2f", importe),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "✓ Producto registrado correctamente",
+                        color = Color(0xFF2E7D32)
+                    )
                     }
                 }
             }
