@@ -184,6 +184,16 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
+                        Spacer(
+                            modifier = Modifier.height(16.dp)
+                        )
+
+                        Text(
+                            text = "✓ Producto registrado correctamente",
+                            color = Color(0xFF2E7D32)
+
+                        )
+                        Modifier.fillMaxWidth()
                     }
                 }
             }
