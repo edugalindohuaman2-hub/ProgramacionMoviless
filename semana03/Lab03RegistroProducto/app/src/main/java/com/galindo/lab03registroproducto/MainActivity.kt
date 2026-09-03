@@ -54,7 +54,21 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        var nombre by remember {
+            mutableStateOf("")
+        }
 
+        var precio by remember {
+            mutableStateOf("")
+        }
+
+        var cantidad by remember {
+            mutableStateOf("")
+        }
+
+        var mostrarResumen by remember {
+            mutableStateOf(false)
+        }
         Text(
             text = "Nuevo producto",
             style = MaterialTheme.typography.headlineSmall
@@ -69,6 +83,50 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
         Spacer(
             modifier = Modifier.height(24.dp)
         )
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = {
+                nombre = it
+            },
+            label = {
+                Text("Nombre del producto")
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            OutlinedTextField(
+                value = precio,
+                onValueChange = {
+                    precio = it
+                },
+                label = {
+                    Text("Precio (S/)")
+                },
+                modifier = Modifier.weight(1f)
+            )
+
+            Spacer(
+                modifier = Modifier.width(16.dp)
+            )
+
+            OutlinedTextField(
+                value = cantidad,
+                onValueChange = {
+                    cantidad = it
+                },
+                label = {
+                    Text("Cantidad")
+                },
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
 }
 
