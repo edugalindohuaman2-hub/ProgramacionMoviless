@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,20 +27,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.galindo.lab03registroproducto.ui.theme.Lab03RegistroProductoTheme
 import java.util.Locale
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             Lab03RegistroProductoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()){ innerPadding ->
-
-                        PantallaRegistro(
-                            modifier = Modifier.padding(innerPadding)
-                        )
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    PantallaRegistro(
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -54,24 +56,12 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        var nombre by remember {
-            mutableStateOf("")
-        }
+        var nombre by remember { mutableStateOf("") }
+        var precio by remember { mutableStateOf("") }
+        var cantidad by remember { mutableStateOf("") }
 
-        var precio by remember {
-            mutableStateOf("")
-        }
-
-        var cantidad by remember {
-            mutableStateOf("")
-        }
-
-        var mostrarResumen by remember {
-            mutableStateOf(false)
-        }
-        var errorMensaje by remember {
-            mutableStateOf("") }
-
+        var mostrarResumen by remember { mutableStateOf(false) }
+        var errorMensaje by remember { mutableStateOf("") }
 
         Text(
             text = "Nuevo producto",
@@ -84,94 +74,85 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.outline
         )
 
-        Spacer(
-            modifier = Modifier.height(24.dp)
-        )
+        Spacer(modifier = Modifier.height(24.dp))
+
         OutlinedTextField(
             value = nombre,
-            onValueChange = {
-                nombre = it
-            },
-            label = {
-                Text("Nombre del producto")
-            },
+            onValueChange = { nombre = it },
+            label = { Text("Nombre del producto") },
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Spacer(modifier = Modifier.height(16.dp))
 
+        Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 value = precio,
-                onValueChange = {
-                    precio = it
-                },
-                label = {
-                    Text("Precio (S/)")
-                },
+                onValueChange = { precio = it },
+                label = { Text("Precio (S/)") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 modifier = Modifier.weight(1f)
             )
 
-            Spacer(
-                modifier = Modifier.width(16.dp)
-            )
+            Spacer(modifier = Modifier.width(16.dp))
 
             OutlinedTextField(
                 value = cantidad,
-                onValueChange = {
-                    cantidad = it
-                },
-                label = {
-                    Text("Cantidad")
-                },
+                onValueChange = { cantidad = it },
+                label = { Text("Cantidad") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.weight(1f)
             )
         }
-            Spacer(
-                modifier = Modifier.height(24.dp)
-            )
 
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Button(
-                    onClick = {
-                        // Validar si hay campos vacíos
-                        if (nombre.isBlank() || precio.isBlank() || cantidad.isBlank()) {
-                            mostrarResumen = false
-                            errorMensaje = "Por favor, complete todos los campos."
-                        } else if (precio.toDoubleOrNull() == null || cantidad.toIntOrNull() == null) {
-                            mostrarResumen = false
-                            errorMensaje = "Ingrese un precio y cantidad válidos."
-                        } else {
-                            errorMensaje = ""
-                            mostrarResumen = true
-                        }
-                    },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("AGREGAR PRODUCTO")
-                }
+        Spacer(modifier = Modifier.height(24.dp))
 
-                Spacer(modifier = Modifier.width(8.dp))
+        // Fila de botones AGREGAR PRODUCTO y LIMPIAR
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = {
+                    val precioNum = precio.toDoubleOrNull()
+                    val cantidadNum = cantidad.toIntOrNull()
 
-                Button(
-                    onClick = {
-                        nombre = ""
-                        precio = ""
-                        cantidad = ""
+                    // 1. Validar campos vacíos
+                    if (nombre.isBlank() || precio.isBlank() || cantidad.isBlank()) {
                         mostrarResumen = false
+                        errorMensaje = "Por favor, complete todos los campos."
+                    }
+                    // 2. Validar que precio y cantidad sean formatos numéricos válidos
+                    else if (precioNum == null || cantidadNum == null) {
+                        mostrarResumen = false
+                        errorMensaje = "Ingrese un precio y/o cantidad válidos (sin letras)."
+                    }
+                    // 3. Si pasa las validaciones, mostrar Card
+                    else {
                         errorMensaje = ""
-                    },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("LIMPIAR")
-                }
+                        mostrarResumen = true
+                    }
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("AGREGAR PRODUCTO")
             }
 
-        // Mensaje de error (solo visible si no está vacío)
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Button(
+                onClick = {
+                    // Limpieza completa de estados
+                    nombre = ""
+                    precio = ""
+                    cantidad = ""
+                    mostrarResumen = false
+                    errorMensaje = ""
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("LIMPIAR")
+            }
+        }
+
+        // Mensaje de error en color rojo
         if (errorMensaje.isNotEmpty()) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -183,7 +164,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Card de Resumen
+        // Card con el resumen (se muestra únicamente si pasó la validación)
         if (mostrarResumen) {
 
             val precioNum = precio.toDoubleOrNull() ?: 0.0
@@ -223,12 +204,11 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                         text = "✓ Producto registrado correctamente",
                         color = Color(0xFF2E7D32)
                     )
-                    }
                 }
             }
         }
     }
-
+}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -237,4 +217,3 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
-
