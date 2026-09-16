@@ -20,6 +20,8 @@ fun TemperatureDisplay() {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(onClick = { temperatura++ }) { Text("Subir") }
             Button(onClick = { temperatura-- }) { Text("Bajar") }
+            Button(onClick = { temperatura = 20 }) { Text("Resetear") }
+
         }
     }
 }
