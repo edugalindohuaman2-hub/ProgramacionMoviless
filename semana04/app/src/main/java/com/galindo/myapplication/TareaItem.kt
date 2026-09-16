@@ -72,7 +72,11 @@ fun ListaDeTareasScreen() {
             items(tareas, key = { it.id }) { tarea ->
                 TareaItem(
                     tarea = tarea,
-                    onToggleCompletada = {},
+                    onToggleCompletada = {id ->
+                        tareas = tareas.map {
+                            if (it.id == id) it.copy(completada = !it.completada) else it
+                        }
+                    },
                     onEliminar = {}
                 )
             }
