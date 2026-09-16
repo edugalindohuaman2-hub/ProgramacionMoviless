@@ -6,6 +6,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.*
 
 data class Tarea(
     val id: Int,
@@ -34,6 +37,26 @@ fun TareaItem(
                 textDecoration = if (tarea.completada) TextDecoration.LineThrough else null
             )
             IconButton(onClick = { onEliminar(tarea.id) }) { Text("✕") }
+        }
+    }
+}
+@Composable
+fun ListaDeTareasScreen() {
+    var tareas by remember { mutableStateOf(listOf<Tarea>()) }
+
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Text(text = "Mis Tareas (${tareas.size})", style = MaterialTheme.typography.headlineSmall)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn {
+            items(tareas, key = { it.id }) { tarea ->
+                TareaItem(
+                    tarea = tarea,
+                    onToggleCompletada = {},
+                    onEliminar = {}
+                )
+            }
         }
     }
 }
