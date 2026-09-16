@@ -43,14 +43,20 @@ fun PantallaCarrito() {
 
     val productos = remember { mutableStateListOf<Producto>() }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // --- 1. FORMULARIO COMPACTO (ARRIBA) ---
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
             label = { Text("Nombre del producto") },
             modifier = Modifier.fillMaxWidth()
         )
-        Row (modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 value = precio,
                 onValueChange = { precio = it },
@@ -65,7 +71,7 @@ fun PantallaCarrito() {
                 modifier = Modifier.weight(1f)
             )
         }
-
+        Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = {
                 val precioNum = precio.toDoubleOrNull() ?: 0.0
@@ -82,7 +88,9 @@ fun PantallaCarrito() {
             Text("AGREGAR")
         }
 
-        Text("Productos: ${productos.size}")
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // --- 2. CONTENIDO CENTRAL CON WEIGHT(1f) ---
         if (productos.isEmpty()) {
             Box(
                 modifier = Modifier
@@ -102,7 +110,7 @@ fun PantallaCarrito() {
                     )
                 }
             }
-        }else {
+        } else {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -112,52 +120,56 @@ fun PantallaCarrito() {
                 items(productos) { producto ->
                     TarjetaProducto(
                         producto = producto,
-                        onEliminar = { productos.remove(producto) })
+                        onEliminar = { productos.remove(producto) }
+                    )
                 }
             }
         }
-    }
-    val subtotal = productos.sumOf { it.precio * it.cantidad }
-    val igv = subtotal * 0.18
-    val total = subtotal + igv
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceVariant
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Productos: ${productos.size}",
-                color = Color.Gray
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("Subtotal")
-                Text(String.format("S/ %.2f", subtotal))
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("IGV (18%)")
-                Text(String.format("S/ %.2f", igv))
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+
+        // --- 3. PANEL DE TOTALES (ABAJO DEL TODO) ---
+        val subtotal = productos.sumOf { it.precio * it.cantidad }
+        val igv = subtotal * 0.18
+        val total = subtotal + igv
+
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.surfaceVariant
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "TOTAL",
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    text = "Productos: ${productos.size}",
+                    color = Color.Gray
                 )
-                Text(
-                    text = String.format("S/ %.2f", total),
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("Subtotal")
+                    Text(String.format("S/ %.2f", subtotal))
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("IGV (18%)")
+                    Text(String.format("S/ %.2f", igv))
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "TOTAL",
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = String.format("S/ %.2f", total),
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }
