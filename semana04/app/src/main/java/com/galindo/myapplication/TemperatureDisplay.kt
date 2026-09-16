@@ -6,10 +6,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Button
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun TemperatureDisplay() {
     var temperatura by remember { mutableStateOf(20) }
+
+    val colorTexto = when {
+        temperatura > 30 -> Color.Red
+        temperatura < 10 -> Color.Blue
+        else -> Color.Black
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
