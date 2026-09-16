@@ -41,6 +41,69 @@ fun TareaItem(
     }
 }
 @Composable
+fun PantallaTareas() {
+    val listaTareas = remember { mutableStateListOf<Tarea>() }
+    var textoTarea by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Total de tareas: ${listaTareas.size}",
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = textoTarea,
+                onValueChange = { textoTarea = it },
+                label = { Text("Nueva tarea") },
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = {
+                if (textoTarea.isNotBlank()) {
+                    val nuevoId = (listaTareas.maxOfOrNull { it.id } ?: 0) + 1
+                    listaTareas.add(Tarea(id = nuevoId, texto = textoTarea))
+                    textoTarea = ""
+                }
+            }) {
+                Text("Agregar")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(listaTareas, key = { it.id }) { tarea ->
+                TareaItem(
+                    tarea = tarea,
+                    onToggleCompletada = { id ->
+                        val index = listaTareas.indexOfFirst { it.id == id }
+                        if (index != -1) {
+                            val itemActual = listaTareas[index]
+                            listaTareas[index] = itemActual.copy(completada = !itemActual.completada)
+                        }
+                    },
+                    onEliminar = { id ->
+                        listaTareas.removeAll { it.id == id }
+                    }
+                )
+            }
+        }
+    }
+}
+@Composable
 fun ListaDeTareasScreen() {
     var tareas by remember { mutableStateOf(listOf<Tarea>()) }
     var textoNuevaTarea by remember { mutableStateOf("") }
