@@ -77,7 +77,9 @@ fun ListaDeTareasScreen() {
                             if (it.id == id) it.copy(completada = !it.completada) else it
                         }
                     },
-                    onEliminar = {}
+                    onEliminar = {id ->
+                        tareas = tareas.filter { it.id != id}
+                    }
                 )
             }
         }
