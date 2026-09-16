@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Column(modifier = Modifier.fillMaxSize()) {
-                        ListaDeTareasScreen()
+                        PantallaTareas()
                     }
                 }
             }
