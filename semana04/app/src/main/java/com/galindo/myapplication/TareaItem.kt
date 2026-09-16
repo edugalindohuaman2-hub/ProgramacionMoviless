@@ -43,9 +43,28 @@ fun TareaItem(
 @Composable
 fun ListaDeTareasScreen() {
     var tareas by remember { mutableStateOf(listOf<Tarea>()) }
+    var textoNuevaTarea by remember { mutableStateOf("") }
+    var siguienteId by remember { mutableStateOf(1) }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = "Mis Tareas (${tareas.size})", style = MaterialTheme.typography.headlineSmall)
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            OutlinedTextField(
+                value = textoNuevaTarea,
+                onValueChange = { textoNuevaTarea = it },
+                label = { Text("Nueva tarea") },
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = {
+                if (textoNuevaTarea.isNotBlank()) {
+                    tareas = tareas + Tarea(id = siguienteId, texto = textoNuevaTarea)
+                    siguienteId++
+                    textoNuevaTarea = ""
+                }
+            }) { Text("Agregar") }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
