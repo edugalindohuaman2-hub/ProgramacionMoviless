@@ -20,6 +20,12 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 data class Producto(
     val nombre: String,
     val precio: Double,
@@ -81,7 +87,45 @@ fun PantallaCarrito() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(productos) { producto ->
-                Text(text = producto.nombre)
+                TarjetaProducto(producto = producto, onEliminar = {productos.remove(producto)})
+            }
+        }
+    }
+}
+@Composable
+fun TarjetaProducto(producto: Producto, onEliminar: () -> Unit) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = producto.nombre,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "S/ ${producto.precio} x ${producto.cantidad}",
+                    color = Color.Gray
+                )
+            }
+            val importe = producto.precio * producto.cantidad
+            Text(
+                text = String.format("S/ %.2f", importe),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            IconButton(onClick = onEliminar) {
+                Text(
+                    text = "✕",
+                    color = MaterialTheme.colorScheme.error,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge
+                )
             }
         }
     }
