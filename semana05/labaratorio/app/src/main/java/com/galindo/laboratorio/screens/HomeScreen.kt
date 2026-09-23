@@ -1,42 +1,38 @@
 package com.galindo.laboratorio.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.galindo.laboratorio.navigation.Screen
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 @Composable
-fun HomeScreen(
-    onNavigate: (String) -> Unit
-) {
+fun HomeScreen(navController: NavController) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
-            text = "Pantalla Principal"
+            text = "Pantalla Tecsup",
+            style = MaterialTheme.typography.headlineMedium
         )
-
+        Spacer(modifier = Modifier.height(32.dp))
         Button(
-            onClick = {
-                onNavigate(Screen.List.route)
-            }
+            onClick = { navController.navigate(Screen.List.route) },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Ver lista")
+            Text("Ver lista de elementos")
         }
-
-        Button(
-            onClick = {
-                onNavigate(Screen.Profile.route)
-            }
+        Spacer(modifier = Modifier.height(12.dp))
+        OutlinedButton(
+            onClick = { navController.navigate(Screen.Profile.route) },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Ver perfil")
+            Text("Mi perfil")
         }
     }
 }

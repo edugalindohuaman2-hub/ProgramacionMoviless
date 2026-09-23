@@ -13,61 +13,32 @@ import com.galindo.laboratorio.screens.ProfileScreen
 
 @Composable
 fun AppNavigation() {
-
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
     ) {
-
-        composable(
-            route = Screen.Home.route
-        ) {
-            HomeScreen(
-                onNavigate = { route ->
-                    navController.navigate(route)
-                }
-            )
+        composable(Screen.Home.route) {
+            HomeScreen(navController)
         }
-
-        composable(
-            route = Screen.List.route
-        ) {
-            ListScreen(
-                onNavigate = { route ->
-                    navController.navigate(route)
-                }
-            )
+        composable(Screen.List.route) {
+            ListScreen(navController)
         }
-
+        composable(Screen.Profile.route) {
+            ProfileScreen(navController)
+        }
         composable(
             route = Screen.Detail.route,
             arguments = listOf(
-                navArgument("itemId") {
+                navArgument(name = "itemId") {
                     type = NavType.IntType
+                    defaultValue = 0
                 }
             )
         ) { backStackEntry ->
-
             val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
-
-            DetailScreen(
-                itemId = itemId,
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-        composable(
-            route = Screen.Profile.route
-        ) {
-            ProfileScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            DetailScreen(navController, itemId)
         }
     }
 }

@@ -1,33 +1,43 @@
 package com.galindo.laboratorio.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
-fun ProfileScreen(
-    onBack: () -> Unit
-) {
-
+fun ProfileScreen(navController: NavController) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
-            text = "Perfil del usuario"
+            text = "Mi Perfil",
+            style = MaterialTheme.typography.headlineMedium
         )
-
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Edu Galindo Huaman",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(32.dp))
         Button(
-            onClick = onBack
+            onClick = {
+                navController.navigate(Screen.Home.route) {
+                    // Limpia el back stack — evita apilar Homes
+                    popUpTo(Screen.Home.route) { inclusive = true }
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Regresar")
+            Text("Ir al inicio")
         }
     }
 }
