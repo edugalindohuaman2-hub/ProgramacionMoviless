@@ -38,7 +38,7 @@ fun DetalleClaseScreen(
     val iconoClase = when (clase.nombre.lowercase()) {
         "yoga funcional" -> Icons.Default.SelfImprovement
         "cross training" -> Icons.Default.FitnessCenter
-        "spinning" -> Icons.Default.DirectionsRun
+        "spinning" -> Icons.Default.Sports
         else -> Icons.Default.SportsGymnastics
     }
 
@@ -53,15 +53,15 @@ fun DetalleClaseScreen(
                 .verticalScroll(scrollState)
                 .padding(bottom = 100.dp)
         ) {
-            // Cabecera Vectorial Hero Institucional
+            // Cabecera con Caja Contenedora Vectorial (Box) con esquinas redondeadas y fondo secundario/tonal suave
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        Brush.linearGradient(
+                        Brush.verticalGradient(
                             colors = listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.secondary
+                                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+                                MaterialTheme.colorScheme.background
                             )
                         )
                     )
@@ -75,58 +75,66 @@ fun DetalleClaseScreen(
                         Surface(
                             onClick = onBackClick,
                             shape = CircleShape,
-                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f),
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             modifier = Modifier.size(40.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                     contentDescription = "Volver",
-                                    tint = MaterialTheme.colorScheme.onPrimary
+                                    tint = MaterialTheme.colorScheme.onSurface
                                 )
                             }
                         }
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            AssistChip(
-                                onClick = {},
-                                label = { Text("TECSUP FIT • ${clase.categoria.uppercase()}", fontSize = 11.sp, fontWeight = FontWeight.Bold) },
-                                colors = AssistChipDefaults.assistChipColors(
-                                    containerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f),
-                                    labelColor = MaterialTheme.colorScheme.onPrimary
-                                ),
-                                border = null
+                    // Caja contenedora vectorial principal (Box) con esquinas redondeadas (24.dp) y fondo secundario suave
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                            .background(
+                                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.4f),
+                                shape = RoundedCornerShape(24.dp)
                             )
-
-                            Spacer(Modifier.height(8.dp))
-
+                            .padding(20.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Surface(
+                                shape = CircleShape,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(64.dp)
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Icon(
+                                        imageVector = iconoClase,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onPrimary,
+                                        modifier = Modifier.size(34.dp)
+                                    )
+                                }
+                            }
+                            Spacer(Modifier.height(12.dp))
                             Text(
                                 text = clase.nombre,
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimary
+                                color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
-                        }
-
-                        Surface(
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.15f),
-                            modifier = Modifier.size(64.dp)
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Icon(
-                                    imageVector = iconoClase,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onPrimary,
-                                    modifier = Modifier.size(36.dp)
-                                )
-                            }
+                            Spacer(Modifier.height(4.dp))
+                            AssistChip(
+                                onClick = {},
+                                label = { Text("TECSUP FIT • ${clase.categoria.uppercase()}", fontSize = 11.sp, fontWeight = FontWeight.Bold) },
+                                colors = AssistChipDefaults.assistChipColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    labelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                ),
+                                border = null
+                            )
                         }
                     }
                 }

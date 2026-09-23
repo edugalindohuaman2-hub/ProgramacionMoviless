@@ -177,7 +177,7 @@ private fun TicketReservaVectorialCard(reserva: Reserva) {
     val iconoClase = when (reserva.clase.nombre.lowercase()) {
         "yoga funcional" -> Icons.Default.SelfImprovement
         "cross training" -> Icons.Default.FitnessCenter
-        "spinning" -> Icons.Default.DirectionsRun
+        "spinning" -> Icons.Default.Sports
         else -> Icons.Default.SportsGymnastics
     }
 

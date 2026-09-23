@@ -25,18 +25,17 @@ fun PerfilScreen(totalReservas: Int) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
-            .padding(20.dp),
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Spacer(Modifier.height(8.dp))
 
-        // Avatar Circular Tonal con iniciales EG (Edu Galindo)
+        // Avatar Circular con contenedor plano y iniciales en negrita
         Surface(
             shape = CircleShape,
             color = MaterialTheme.colorScheme.primaryContainer,
-            modifier = Modifier.size(96.dp),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+            modifier = Modifier.size(96.dp)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Text(
@@ -48,14 +47,17 @@ fun PerfilScreen(totalReservas: Int) {
             }
         }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Text(
                 text = "Edu Galindo",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
             )
-            Spacer(Modifier.height(4.dp))
+
             AssistChip(
                 onClick = {},
                 label = { Text("Plan Premium", fontSize = 12.sp, fontWeight = FontWeight.Bold) },
@@ -70,18 +72,18 @@ fun PerfilScreen(totalReservas: Int) {
             )
         }
 
-        // Tarjetas métricas (Clases reservadas y 3 Rachas)
+        // Tarjetas métricas simétricas con números grandes en negrita y etiquetas pequeñas debajo
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            MetricCardVectorial(
+            MetricCardSimetrica(
                 icon = Icons.Default.FitnessCenter,
                 title = "$totalReservas",
                 subtitle = "Clases reservadas",
                 modifier = Modifier.weight(1f)
             )
-            MetricCardVectorial(
+            MetricCardSimetrica(
                 icon = Icons.Default.LocalFireDepartment,
                 title = "3",
                 subtitle = "Rachas activas",
@@ -100,7 +102,7 @@ fun PerfilScreen(totalReservas: Int) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
                     text = "Información de Usuario",
@@ -120,49 +122,42 @@ fun PerfilScreen(totalReservas: Int) {
 }
 
 @Composable
-private fun MetricCardVectorial(
+private fun MetricCardSimetrica(
     icon: ImageVector,
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier
 ) {
-    ElevatedCard(
+    OutlinedCard(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 3.dp)
+        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)),
+        elevation = CardDefaults.outlinedCardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Surface(
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primaryContainer,
-                modifier = Modifier.size(44.dp)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(22.dp)
-                    )
-                }
-            }
-            Spacer(Modifier.height(10.dp))
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(24.dp)
+            )
             Text(
                 text = title,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Spacer(Modifier.height(2.dp))
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -182,7 +177,7 @@ private fun PerfilItemRow(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
                 imageVector = icon,
@@ -190,7 +185,7 @@ private fun PerfilItemRow(
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
             )
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(
                     text = label,
                     style = MaterialTheme.typography.bodySmall,
