@@ -1,4 +1,4 @@
-package com.galindo.actividad_a.ui.theme
+package com.galindo.actividad_b.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
