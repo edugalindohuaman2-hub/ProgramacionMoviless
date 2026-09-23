@@ -369,7 +369,7 @@ private fun TicketReservaVectorialCard(reserva: Reserva) {
                     )
                     Spacer(Modifier.height(2.dp))
                     Text(
-                        text = "Diego Ramos • Plan Premium",
+                        text = "Edu Galindo • Plan Premium",
                         fontSize = 11.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
